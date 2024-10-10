@@ -31,6 +31,7 @@ jobs:
       uses: ouzi-dev/commit-status-updater@v2
       with:
         status: pending
+        name: "${{ matrix.wait }}-${{matrix.status}}"
     - if: matrix.wait
       run: sleep 120
     - if: ${{ ! matrix.url }} 

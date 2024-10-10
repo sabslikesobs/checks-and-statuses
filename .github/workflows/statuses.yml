@@ -22,6 +22,7 @@ jobs:
           - wait: no
             status: failure
             url: https://invalid.com
+            name: Big Huge Test
             description: Test failed and stuff and the result is LONG
         
     steps:
@@ -36,10 +37,11 @@ jobs:
       uses: ouzi-dev/commit-status-updater@v2
       with:
         status: "${{ matrix.status }}"
-        description: "${{ matrix.wait }}-${{matrix.status}}"
+        name: "${{ matrix.wait }}-${{matrix.status}}"
     - if: matrix.url 
       uses: ouzi-dev/commit-status-updater@v2
       with:
         status: "${{ matrix.status }}"
+        name: "${{matrix.name}}"
         url: ${{ matrix.url }}
-        description: ${{ matrix.description }}
+        description: "${{matrix.description}}"

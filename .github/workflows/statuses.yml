@@ -1,0 +1,41 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - wait: yes
+            status: success
+          - wait: no
+            status: error
+          - wait: no
+            status: cancelled
+          - wait: no
+            status: failure
+          - wait: no
+            status: failure
+            url: https://invalid.com
+            description: Test failed and stuff and the result is LONG
+        
+    steps:
+    - uses: actions/checkout@v3
+    - if: matrix.wait
+      uses: ouzi-dev/commit-status-updater@v2
+      with:
+        status: pending
+    - if: matrix.wait
+      run: sleep 120
+    - if: not matrix.url 
+      uses: ouzi-dev/commit-status-updater@v2
+      with:
+        status: "${{ matrix.status }}"
+    - if: matrix.url 
+      uses: ouzi-dev/commit-status-updater@v2
+      with:
+        status: "${{ matrix.status }}"
+        url: ${{ matrix.url }}
+        description: ${{ matrix.description }}

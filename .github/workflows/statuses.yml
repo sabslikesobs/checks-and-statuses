@@ -36,6 +36,7 @@ jobs:
       uses: ouzi-dev/commit-status-updater@v2
       with:
         status: "${{ matrix.status }}"
+        description: "${{ matrix.wait }}-${{matrix.status}}"
     - if: matrix.url 
       uses: ouzi-dev/commit-status-updater@v2
       with:
